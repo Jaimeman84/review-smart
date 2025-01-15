@@ -175,6 +175,9 @@ class ReviewSmartUI:
                 use_container_width=True
             )
 
+            st.markdown("---")
+            st.markdown("Made with ❤️ by Jaime Mantilla, MSIT + AI")
+
 if __name__ == "__main__":
     app = ReviewSmartUI()
     app.run()

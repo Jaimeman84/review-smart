@@ -12,6 +12,10 @@ class AnalyzerInterface(ABC):
             reviews_df: DataFrame containing reviews
             
         Returns:
-            Dictionary containing analysis results
+            Dictionary containing analysis results with at least:
+            - total_reviews: int
+            - sentiment_scores: list
+            - common_words: dict
+            - reviews_data: list
         """
         pass

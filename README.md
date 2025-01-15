@@ -5,8 +5,12 @@ ReviewSmart is a powerful tool designed to help app developers and businesses an
 ## Features
 
 - **Bulk URL Support**: Analyze multiple apps simultaneously
-- **Sentiment Analysis**: Automated analysis of reviews (3 stars and below)
-- **Downloadable Reports**: Export insights in CSV and PDF formats
+- **Sentiment Analysis**: Automated sentiment analysis of reviews
+- **Data Visualization**: 
+  - Word cloud of common themes
+  - Sentiment distribution charts
+  - Rating distribution
+- **Downloadable Reports**: Export insights in CSV format
 - **User-Friendly Interface**: Built with Streamlit for easy interaction
 
 ## Installation
@@ -20,16 +24,18 @@ cd reviewsmart
 2. Create a virtual environment and activate it:
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# On Windows:
+venv\Scripts\activate
+
+# On macOS/Linux:
+source venv/bin/activate
 ```
 
 3. Install dependencies:
 ```bash
 pip install -r requirements.txt
-python -m textblob.download_corpora
 ```
-
-Note: On first run, the application will automatically download required NLTK data if it's not already present.
 
 ## Usage
 
@@ -40,51 +46,88 @@ streamlit run src/ui/streamlit_app.py
 
 2. Open your browser and navigate to the provided URL (typically http://localhost:8501)
 
-3. Enter Google Play Store URLs (one per line) and click "Analyze Reviews"
+3. Enter Google Play Store URLs (one per line) in the format:
+```
+https://play.google.com/store/apps/details?id=com.example.app
+```
 
-4. View the analysis results and download reports in CSV or PDF format
+4. Click "Analyze Reviews" to start the analysis
 
-## Development
-
-### Project Structure
+## Project Structure
 
 ```
 reviewsmart/
 ├── src/
-│   ├── interfaces/       # Abstract interfaces
-│   ├── services/        # Core functionality
-│   └── ui/             # Streamlit UI
-├── tests/              # Unit tests
-└── ...
+│   ├── interfaces/      # Abstract interfaces
+│   │   ├── analyzer_interface.py
+│   │   └── scraper_interface.py
+│   ├── services/       # Core functionality
+│   │   ├── analyzer_service.py
+│   │   └── scraper_service.py
+│   └── ui/            # Streamlit UI
+│       └── streamlit_app.py
+├── tests/             # Unit tests
+│   ├── test_analyzer.py
+│   └── test_scraper.py
+├── requirements.txt   # Project dependencies
+└── README.md
 ```
+
+## Development
 
 ### Running Tests
 
+Run all tests:
 ```bash
-pytest tests/
+pytest tests/ -v
+```
+
+Run specific test file:
+```bash
+pytest tests/test_analyzer.py -v
 ```
 
 ### Code Style
 
-The project uses:
-- Black for code formatting
-- isort for import sorting
-- mypy for type checking
+The project follows Python best practices and SOLID principles:
+- Single Responsibility Principle: Each class has one primary responsibility
+- Open/Closed Principle: Open for extension, closed for modification
+- Liskov Substitution Principle: Interfaces are properly abstracted
+- Interface Segregation: Interfaces are focused and minimal
+- Dependency Inversion: High-level modules depend on abstractions
 
-Run formatting:
-```bash
-black src/ tests/
-isort src/ tests/
-mypy src/
-```
+## Limitations
+
+- The Google Play Scraper API has some limitations on the number of reviews it can fetch
+- The app typically can analyze around 2000-3000 reviews reliably
+- Review scraping might be affected by rate limiting
 
 ## Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
+2. Create a feature branch:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m 'Add some feature'
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
 5. Create a Pull Request
+
+## Dependencies
+
+- streamlit: Web interface
+- google-play-scraper: Review scraping
+- textblob: Sentiment analysis
+- pandas: Data manipulation
+- wordcloud: Word cloud generation
+- pillow: Image processing
+- pytest: Testing
 
 ## License
 
@@ -92,6 +135,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
-- Built with Streamlit
-- Uses TextBlob for sentiment analysis
-- Powered by google-play-scraper
+- Built with [Streamlit](https://streamlit.io/)
+- Uses [google-play-scraper](https://github.com/JoMingyu/google-play-scraper) for data collection
+- Sentiment analysis powered by [TextBlob](https://textblob.readthedocs.io/)
