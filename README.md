@@ -17,7 +17,7 @@ ReviewSmart is a powerful tool designed to help app developers and businesses an
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/jaimeman84/reviewsmart.git
+git clone https://github.com/jaimeman84/review-smart.git
 cd reviewsmart
 ```
 
